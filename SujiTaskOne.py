@@ -5,8 +5,8 @@ Missing response are NaN
 '''
 
 import requests
-import textwrap
 import re
+import csv
 
 
 def collect_data():
@@ -54,26 +54,17 @@ def collect_data():
     return header, ppl
 
 
-def print_table():
+def create_csv():
     '''
-
-    print submitted response in a table. Table is in this format:
-        question 1       question 2     question3       question 4      question 5
-        response11       response12     response13      response14      response15
-        response21       response22     response24      response24      response25
-        response31       response32     response34      response34      response35
-
-    response11: the frist digit is first submission id, the second digit is the question id
+        Stores data in Task1Output.csv file
     '''
     header, ppl = collect_data()  # return list of questions and answers
-    fmt = '{0:<75}\t{1:<95}\t{2:<110}\t{3:<85}\t{4:<100}'  # format of the table
-    print(fmt.format(header[0], header[1], header[2], header[3],
-                     header[4]))  # print the questions in list 'header' using the format 'fmt'
-    for object in ppl:
-        print(fmt.format(textwrap.fill(object[0], 35), textwrap.fill(object[1], 35), textwrap.fill(object[2], 35),
-                         textwrap.fill(object[3], 100),
-                         textwrap.fill(object[4], 225)))  # print the answers in list 'ppl' using format fmt
+    with open("Task1Output.csv", "w") as outcsv:
+        writer = csv.writer(outcsv)
+        writer.writerow([header[0], header[1], header[2], header[3], header[4]]) #write header into Task1Output.csv
+        for object in ppl:
+            writer.writerow([object[0], object[1], object[2], object[3], object[4]]) #Write item into Task1Output.csv
 
 
 if __name__ == "__main__":
-    print_table()  # print table
+    create_csv()  # Create csv
