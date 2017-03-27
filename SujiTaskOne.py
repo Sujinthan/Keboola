@@ -55,6 +55,16 @@ def collect_data():
 
 
 def print_table():
+    '''
+
+    print submitted response in a table. Table is in this format:
+        question 1       question 2     question3       question 4      question 5
+        response11       response12     response13      response14      response15
+        response21       response22     response24      response24      response25
+        response31       response32     response34      response34      response35
+
+    response11: the frist digit is first submission id, the second digit is the question id
+    '''
     header, ppl = collect_data()  # return list of questions and answers
     fmt = '{0:<75}\t{1:<95}\t{2:<110}\t{3:<85}\t{4:<100}'  # format of the table
     print(fmt.format(header[0], header[1], header[2], header[3],
