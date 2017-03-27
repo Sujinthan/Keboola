@@ -1,3 +1,9 @@
+'''
+SujiTaskOne.py
+Get submitted response from Typeform api and produces a sing table with all responses.
+Missing response are NaN
+'''
+
 import requests
 import textwrap
 import re
@@ -24,11 +30,10 @@ def collect_data():
     index_of = []  # list to store index of question field_id
 
     data = r.json()  # Use json data from Response
-
     for item in data['questions']:
         index_of.append(item['field_id'])  # store question field_id
     for response in data['responses']:
-        ans = [""] * 5  # create list with size length same as the number of questions
+        ans = ["NaN"] * len(index_of)  # create list with size length same as the number of questions
         for id in response['answers']:
             temp = []  # list to stroe id of answers to questions
             for obj in response['answers'].keys():
@@ -42,7 +47,7 @@ def collect_data():
                 if str(item['field_id']) not in temp:
                     # if the user did not answer the question then store "NaN" in the same index as the current question_id in list 'ans'
                     ans[temp_index] = "NaN"
-                elif (bool(response['answers']) == False):
+                if (bool(response['answers']) == False):
                     # if the user did not answer any question then store "NaN" in the same index as the current question_id in list 'ans'
                     ans[temp_index] = "NaN"
         ppl.append(ans)  # store list 'ans' in list 'ppl'
